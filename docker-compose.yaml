@@ -1,0 +1,22 @@
+version: '3.0'
+services:
+        ffmpeg:
+                container_name: ffmpeg
+                build: .
+                volumes:
+                        - ./video_stream/:/home/video_stream
+               # devices: 
+               #         - /dev/vchiq
+
+        nginx:
+                container_name: nginx
+                hostname: nginx
+                image: nginx
+                ports:
+                        - 80:80
+                        - 443:443
+                volumes:
+                        - ./nginx/config/:/etc/nginx
+                        - ./nginx/certs/:/ect/ssl/private
+                        - ./video_stream/:/var/www/video_stream
+                        - ./html/:/var/www/html
