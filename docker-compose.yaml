@@ -5,8 +5,8 @@ services:
                 build: .
                 volumes:
                         - ./video_stream/:/home/video_stream
-               # devices: 
-               #         - /dev/vchiq
+                devices: 
+                        - /dev/vchiq
 
         nginx:
                 container_name: nginx
