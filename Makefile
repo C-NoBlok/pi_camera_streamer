@@ -28,6 +28,9 @@ up: ## spins up nginx and pi_stream stream
 down: ## tears down docker containers
 	docker-compose down
 
+up-build: ## setups up docker compose building new images
+	docker-compose up --build
+
 picam-stream: ## starts picam stream and publihes to local rtsp server:
 	ffmpeg -f alsa -i plughw:2,0 \
 		-f v4l2 -framerate 25 -video_size 640x480 -i /dev/video0 \

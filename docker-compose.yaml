@@ -1,12 +1,14 @@
 version: '3.0'
 services:
-        ffmpeg:
-                container_name: ffmpeg
+        pi_stream:
+                container_name: pi_stream
                 build: .
+                privileged: true
                 volumes:
                         - ./video_stream/:/home/video_stream
                 devices: 
                         - /dev/vchiq
+                        - /dev/snd:/dev/snd
 
         nginx:
                 container_name: nginx
