@@ -28,4 +28,17 @@ up: ## spins up nginx and pi_stream stream
 down: ## tears down docker containers
 	docker-compose down
 
+picam-stream: ## starts picam stream and publihes to local rtsp server:
+	ffmpeg -f alsa -i plughw:2,0 \
+		-f v4l2 -framerate 25 -video_size 640x480 -i /dev/video0 \
+		-f rtsp rtsp://localhost:8554/picam
 
+simple-rtsp:  ## deploy rtsp-simple-server docker container
+	docker run --rm -it --network=host aler9/rtsp-simple-server
+
+rtsp2http:  ## Uses vlc to transcode rtsp signal to http
+	vlc --intf dummy -vvv rtsp://localhost:8554/picam --sout \
+		'#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,\
+		channels=2,samplerate=44100,scodec=none}:http{mux=ogg,dst=:8080/picam}'
+
+pi-stream: simple-rtsp picam-stream rtsp2http
