@@ -28,4 +28,7 @@ up: ## spins up nginx and pi_stream stream
 down: ## tears down docker containers
 	docker-compose down
 
+up-build: ## setups up docker compose building new images
+	docker-compose up --build
+
 
