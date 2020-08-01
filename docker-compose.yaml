@@ -1,24 +1,36 @@
 version: '3.0'
 services:
-        pi_stream:
-                container_name: pi_stream
-                build: .
+        ffmpeg:
+                container_name: ffmpeg
+                hostname: ffmpeg
+                build: 
+                        context: .
+                        dockerfile: Dockerfile-ffmpeg
                 privileged: true
+                environment:
+                        RSTP_HOST_PORT: 8554
+                        RSTP_HOST_PATH: /picam
                 volumes:
                         - ./video_stream/:/home/video_stream
                 devices: 
                         - /dev/vchiq
                         - /dev/snd:/dev/snd
 
-        nginx:
-                container_name: nginx
-                hostname: nginx
-                image: nginx
-                ports:
-                        - 80:80
-                        - 443:443
-                volumes:
-                        - ./nginx/config/:/etc/nginx
-                        - ./nginx/certs/:/ect/ssl/private
-                        - ./video_stream/:/var/www/video_stream
-                        - ./html/:/var/www/html
+        vlc: 
+                container_name: vlc
+                hostname: vlc
+                build: 
+                        context: .
+                        dockerfile: Dockerfile-vlc
+                environment:
+                        HTTP_STREAM_PORT: 8081
+                        RSTP_HOST_PORT: 8554
+                        RSTP_HOST_PATH: /picam
+
+        
+        rtsp:
+                container_name: simple-rtsp
+                hostname: rtsp
+                image: aler9/rtsp-simple-server
+
+

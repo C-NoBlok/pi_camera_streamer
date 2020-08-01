@@ -37,11 +37,11 @@ picam-stream: ## starts picam stream and publihes to local rtsp server:
 		-f rtsp rtsp://localhost:8554/picam
 
 simple-rtsp:  ## deploy rtsp-simple-server docker container
-	docker run --rm -it --network=host aler9/rtsp-simple-server
+	docker run --rm -d --network=host aler9/rtsp-simple-server
 
 rtsp2http:  ## Uses vlc to transcode rtsp signal to http
 	vlc --intf dummy -vvv rtsp://localhost:8554/picam --sout \
 		'#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,\
 		channels=2,samplerate=44100,scodec=none}:http{mux=ogg,dst=:8080/picam}'
 
-pi-stream: simple-rtsp picam-stream rtsp2http
+pi-stream: simple-rtsp picam-stream rtsp2http ## Launch pi streaming components
