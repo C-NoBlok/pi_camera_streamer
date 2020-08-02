@@ -6,24 +6,37 @@ help:
 	awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 
-build: ## build docker container for pi_stream
-	docker build --tag pi_stream:latest .
+build-ffmpeg: ## build docker container for pi_stream
+	docker build --tag pi_stream:latest ffmpeg
 
-run: ## Runs pi_stream container
-	docker run -it --privileged -v ~/video_stream:/home/video_stream --name pi_stream pi_stream:latest
+build-vlc: ## Build docker container for vlc
+	docker build --tag vlc:latest vlc
 
-run-bash: ## Starts container in bash
-	docker run -it --privileged -v ~/video_stream:/home/video_stream pi_stream:latest /bin/bash
+run-ffmpeg: ## Runs pi_stream container
+	docker run -it --privileged -v ~/video_stream:/home/video_stream --name ffmpeg ffmpeg:latest
+	
+run-vlc: ## Runs pi_stream container
+	docker run -it --env-file .env --name vlc vlc:latest
+
+b-run-ffmpeg: ## Starts container in bash
+	docker run -it --privileged -v ~/video_stream:/home/video_stream ffmpeg:latest /bin/bash
+	
+b-run-vlc: ## Starts container in bash
+	docker run -it vlc:latest /bin/bash
 
 clean-stream: ## clean video stream folder
 	rm ~/video_stream/picam*
 
-stop: ## stops pi_stream container
-	docker stop pi_stream
-	docker rm pi_stream
+stop-ffmpeg: ## stops pi_stream container
+	docker stop ffmpeg
+	docker rm ffmpeg
+
+stop-vlc: ## stops pi_stream container
+	docker stop vlc
+	docker rm vlc
 
 up: ## spins up nginx and pi_stream stream
-	docker-compose up -d
+	docker-compose up 
 
 down: ## tears down docker containers
 	docker-compose down
