@@ -1,6 +1,6 @@
 version: '3.0'
 services:
-        rtsp:
+        simple-rtsp:
                 container_name: simple-rtsp
                 hostname: rtsp
                 image: aler9/rtsp-simple-server
@@ -10,9 +10,6 @@ services:
                 hostname: ffmpeg
                 build: ffmpeg
                 privileged: true
-              # environment:
-              #         RSTP_HOST_PORT: 8554
-              #         RSTP_HOST_PATH: /picam
                 volumes:
                         - ./video_stream/:/home/video_stream
                 devices: 
@@ -25,13 +22,7 @@ services:
                 container_name: vlc
                 hostname: vlc
                 build: vlc
-              # environment:
-              #         HTTP_STREAM_PORT: 8081
-              #         RSTP_HOST_PORT: 8554
-              #         RSTP_HOST_PATH: /picam
                 env_file:
                         - .env
-
-        
-
-
+                ports:
+                        - "8080:8080"

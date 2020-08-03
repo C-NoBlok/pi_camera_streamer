@@ -1,8 +1,8 @@
-FROM raspbian/stretch:latest
+# FROM raspbian/stretch:latest
+FROM ubuntu:bionic
 
-run apt-get clean && apt-get update && apt-get -y upgrade
-
-run apt -y install vlc
+run apt-get update
+run apt-get install -y vlc
 
 workdir /home
 add ./vlc_http_stream.sh ./vlc_http_stream.sh
