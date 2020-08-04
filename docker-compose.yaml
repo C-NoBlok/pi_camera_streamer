@@ -4,7 +4,8 @@ services:
                 container_name: simple-rtsp
                 hostname: rtsp
                 image: aler9/rtsp-simple-server
-
+                restart: always
+                
         ffmpeg:
                 container_name: ffmpeg
                 hostname: ffmpeg
@@ -18,6 +19,7 @@ services:
                 env_file:
                         - .env
 
+                restart: always
         vlc: 
                 container_name: vlc
                 hostname: vlc
@@ -26,3 +28,4 @@ services:
                         - .env
                 ports:
                         - "8080:8080"
+                restart: always
