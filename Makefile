@@ -36,7 +36,8 @@ stop-vlc: ## stops pi_stream container
 	docker rm vlc
 
 up: ## spins up nginx and pi_stream stream
-	docker-compose up 
+	python3 ./nginx/html_gen.py
+	docker-compose up -d
 
 down: ## tears down docker containers
 	docker-compose down
