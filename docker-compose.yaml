@@ -1,24 +1,40 @@
 version: '3.0'
 services:
-        pi_stream:
-                container_name: pi_stream
-                build: .
+        simple-rtsp:
+                container_name: simple-rtsp
+                hostname: rtsp
+                image: aler9/rtsp-simple-server
+                restart: always
+                
+        ffmpeg:
+                container_name: ffmpeg
+                hostname: ffmpeg
+                build: ffmpeg
                 privileged: true
                 volumes:
                         - ./video_stream/:/home/video_stream
                 devices: 
                         - /dev/vchiq
                         - /dev/snd:/dev/snd
+                env_file:
+                        - .env
 
+                restart: always
+        vlc: 
+                container_name: vlc
+                hostname: vlc
+                build: vlc
+                env_file:
+                        - .env
+                ports:
+                        - "8080:8080"
+                restart: always
         nginx:
                 container_name: nginx
                 hostname: nginx
-                image: nginx
+                build: nginx
                 ports:
-                        - 80:80
-                        - 443:443
+                        - "80:80"
+                        - "443:443"
                 volumes:
-                        - ./nginx/config/:/etc/nginx
-                        - ./nginx/certs/:/ect/ssl/private
-                        - ./video_stream/:/var/www/video_stream
-                        - ./html/:/var/www/html
+                        - ./nginx/html:/usr/share/nginx/html
