@@ -3,8 +3,7 @@ services:
   simple-rtsp:
     container_name: simple-rtsp
     hostname: rtsp
-    network:
-    - StreamNetwork
+    network: StreamNetwork
     image: aler9/rtsp-simple-server
     restart: always
                 
@@ -12,8 +11,7 @@ services:
     container_name: ffmpeg
     hostname: ffmpeg
     build: ffmpeg
-    network:
-    - StreamNetwork
+    network: StreamNetwork
     privileged: true
     volumes:
     - ./video_stream/:/home/video_stream
@@ -28,8 +26,7 @@ services:
     container_name: vlc
     hostname: vlc
     build: vlc
-    network:
-    - StreamNetwork
+    network: StreamNetwork
     env_file:
     - .env
     ports:
@@ -37,7 +34,7 @@ services:
     restart: always
 networks:
   StreamNetwork: {}
-  
+
 #        nginx:
 #                container_name: nginx
 #                hostname: nginx
