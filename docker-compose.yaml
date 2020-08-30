@@ -4,11 +4,11 @@ networks:
 services:
   simple-rtsp:
     container_name: simple-rtsp
-      hostname: rtsp
-      network:
-      - StreamNetwork	
-      image: aler9/rtsp-simple-server
-      restart: always
+    hostname: rtsp
+    network:
+    - StreamNetwork	
+    image: aler9/rtsp-simple-server
+    restart: always
                 
   ffmpeg:
     container_name: ffmpeg
