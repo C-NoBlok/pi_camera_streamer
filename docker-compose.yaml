@@ -1,6 +1,4 @@
 version: '3.0'
-networks:
-  StreamNetwork:
 services:
   simple-rtsp:
     container_name: simple-rtsp
@@ -37,6 +35,9 @@ services:
     ports:
     - "8080:8080"
     restart: always
+networks:
+  StreamNetwork: {}
+  
 #        nginx:
 #                container_name: nginx
 #                hostname: nginx
