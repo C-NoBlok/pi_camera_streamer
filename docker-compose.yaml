@@ -1,42 +1,42 @@
 version: '3.0'
 networks:
-	StreamNetwork:
+  StreamNetwork:
 services:
-        simple-rtsp:
-                container_name: simple-rtsp
-                hostname: rtsp
-		network:
-			- StreamNetwork	
-                image: aler9/rtsp-simple-server
-                restart: always
+  simple-rtsp:
+    container_name: simple-rtsp
+      hostname: rtsp
+      network:
+      - StreamNetwork	
+      image: aler9/rtsp-simple-server
+      restart: always
                 
-        ffmpeg:
-                container_name: ffmpeg
-                hostname: ffmpeg
-                build: ffmpeg
-		network:
-			- StreamNetwork	
-                privileged: true
-                volumes:
-                        - ./video_stream/:/home/video_stream
-                devices: 
-                        - /dev/vchiq
-                        - /dev/snd:/dev/snd
-                env_file:
-                        - .env
-
-                restart: always
-        vlc: 
-                container_name: vlc
-                hostname: vlc
-                build: vlc
-		network:
-			- StreamNetwork	
-                env_file:
-                        - .env
-                ports:
-                        - "8080:8080"
-                restart: always
+  ffmpeg:
+    container_name: ffmpeg
+    hostname: ffmpeg
+    build: ffmpeg
+    network:
+    - StreamNetwork	
+    privileged: true
+    volumes:
+    - ./video_stream/:/home/video_stream
+    devices: 
+    - /dev/vchiq
+    - /dev/snd:/dev/snd
+    env_file:
+    - .env
+    restart: always
+        
+  vlc: 
+    container_name: vlc
+    hostname: vlc
+    build: vlc
+    network:
+    - StreamNetwork	
+    env_file:
+    - .env
+    ports:
+    - "8080:8080"
+    restart: always
 #        nginx:
 #                container_name: nginx
 #                hostname: nginx
