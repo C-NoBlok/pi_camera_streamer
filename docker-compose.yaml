@@ -6,7 +6,7 @@ services:
     container_name: simple-rtsp
     hostname: rtsp
     network:
-    - StreamNetwork	
+    - StreamNetwork
     image: aler9/rtsp-simple-server
     restart: always
                 
