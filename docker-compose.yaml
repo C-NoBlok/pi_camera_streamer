@@ -15,7 +15,7 @@ services:
     hostname: ffmpeg
     build: ffmpeg
     network:
-    - StreamNetwork	
+    - StreamNetwork
     privileged: true
     volumes:
     - ./video_stream/:/home/video_stream
@@ -31,7 +31,7 @@ services:
     hostname: vlc
     build: vlc
     network:
-    - StreamNetwork	
+    - StreamNetwork
     env_file:
     - .env
     ports:
