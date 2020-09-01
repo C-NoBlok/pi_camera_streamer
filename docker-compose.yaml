@@ -3,7 +3,7 @@ services:
   simple-rtsp:
     container_name: simple-rtsp
     hostname: rtsp
-    network_mode: host
+#     network_mode: host
     image: aler9/rtsp-simple-server
     restart: always
                 
@@ -11,7 +11,7 @@ services:
     container_name: ffmpeg
     hostname: ffmpeg
     build: ffmpeg
-    network_mode: host
+#     network_mode: host
     privileged: true
     volumes:
     - ./video_stream/:/home/video_stream
@@ -26,7 +26,7 @@ services:
     container_name: vlc
     hostname: vlc
     build: vlc
-    network_mode: host
+#     network_mode: host
     env_file:
     - .env
     ports:
