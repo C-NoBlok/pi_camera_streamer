@@ -58,9 +58,8 @@ up-build: ## setups up docker compose building new images
 	docker-compose up --build
 
 picam-stream: ## starts picam stream and publihes to local rtsp server:
-	ffmpeg -f alsa -i plughw:2,0 \
-		-f v4l2 -framerate 25 -video_size 640x480 -i /dev/video0 \
-		-f rtsp rtsp://localhost:8554/picam
+	sh ./ffmpeg/wireless_stream.sh
+	
 
 simple-rtsp:  ## deploy rtsp-simple-server docker container
 	docker run --rm -d --network=host aler9/rtsp-simple-server
