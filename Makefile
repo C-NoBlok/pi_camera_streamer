@@ -5,6 +5,18 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 	awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+deploy: stop ## Deploys rtsp, ffmpeg, and vlc clients
+	docker build --tag ffmpeg:latest ffmpeg/.
+	docker build --tag vlc:latest vlc/.
+	docker run --rm -d --network=host --name rtsp aler9/rtsp-simple-server
+	docker run -it -d --env-file ./.env --privileged --device=/dev/vchiq:/dev/vchiq --device=/dev/snd:/dev/snd --name ffmpeg ffmpeg:latest
+	docker run -it -d --env-file ./.env -p 8080:8080 --name vlc vlc:latest
+
+stop:  ## stops rtsp, ffmpeg and vlc clients
+	( docker stop ffmpeg && docker rm ffmpeg ) || true
+	( docker stop rtsp && docker rm rtsp ) || true
+	( docker stop vlc && docker rm vlc ) || true
+	
 
 build-ffmpeg: ## build docker container for pi_stream
 	docker build --tag pi_stream:latest ffmpeg
