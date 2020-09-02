@@ -55,7 +55,7 @@ down: ## tears down docker containers
 	docker-compose down
 
 up-build: ## setups up docker compose building new images
-	docker-compose up --build
+	docker-compose up -d --build
 
 picam-stream: ## starts picam stream and publihes to local rtsp server:
 	sh ./ffmpeg/wireless_stream.sh
